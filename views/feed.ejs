@@ -1,0 +1,23 @@
+<% include ./partials/navbar.ejs %>
+
+  <div class="container mt-5 d-flex" style="gap:20px">
+    <%founduser.forEach(function(user){ %>
+      <div class="card" style="width: 18rem;">
+        <img id="img" src="../images/uploads/<%=user.image%>" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">
+            <%=user.username%>
+          </h5>
+          <p>
+            <%=user.post_id.postdel%>
+          </p>
+          <small>like <%=user.likes.length %> by people</small>
+          <a href="/like/<%=user._id %>" class="btn btn-primary">like by people</a>
+        </div>
+       </div>
+       
+       <%})%>
+      </div> 
+      
+      
+  <% include ./partials/footer.ejs %>

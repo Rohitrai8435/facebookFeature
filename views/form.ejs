@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* Styling for the form */
+    body {
+      background-color: #f8f8f8;
+    }
+
+    .form-container {
+      width: 300px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus {
+      border-color: dodgerblue;
+      outline: none;
+      box-shadow: 0 0 5px dodgerblue;
+    }
+
+    .form-group input[type="submit"] {
+      background-color: dodgerblue;
+      color: white;
+      cursor: pointer;
+    }
+
+    .form-group input[type="submit"]:hover {
+      background-color: #1e90ff;
+    }
+  </style>
+  <link rel="stylesheet" href="../stylesheets/style.css">
+</head>
+<body>
+    <% include ./partials/header.ejs %>
+  <div class="form-container">
+    <form action="/register" method="post"></form>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input id="inp" type="text" name="username" placeholder="username">
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      var input= document.querySelector("#inp");
+      input.addEventListener("input",function(){
+        var user=input.value.trim();
+        if(user.length>0){
+          axios.get(`/username/${user}`).then((data)=>
+        {
+          if(data.data.found){
+          input.style.outlineColor="red";
+          document.querySelector("#submit").setAttribute("disabled","false");
+          }
+          else
+          {
+            input.style.outlineColor="black";
+            document.querySelector("#submit").removeAttribute("disabled","true");
+          }
+          })
+        }
+        else{
+          input.style.outlineColor="black";
+        }
+        
+      })
+     </script>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password">
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="number">Number:</label>
+        <input type="number" id="number" name="number" placeholder="Enter a number">
+      </div>
+      <div class="form-group">
+        <input type="submit" id="submit" >
+      </div>
+    </form>
+  </div>
+  <h1>Login here</h1>
+  <form action="/login" method="post">
+    <input type="text" name="username" placeholder="username" id="">
+    <input type="password" name="password" placeholder="password" id="">
+    <input type="submit" >
+  </form>
+  <% include ./partials/footer.ejs%>
+</body>
+</html>
